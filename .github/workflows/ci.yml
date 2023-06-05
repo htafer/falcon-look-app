@@ -27,21 +27,21 @@ jobs:
       if: ${{ always() }}
       run: coverage report > coverage-report
 
-    - name: Scan image
-      uses: anchore/scan-action@v3
-      id: scan
-      with:
-        image: "htafer/falcon-look-app"
+    # - name: Scan image
+    #   uses: anchore/scan-action@v3
+    #   id: scan
+    #   with:
+    #     image: "htafer/falcon-look-app"
 
-    - name: upload Anchore scan SARIF report
-      uses: github/codeql-action/upload-sarif@v2
-      with:
-        sarif_file: ${{ steps.scan.outputs.sarif }}
+    # - name: upload Anchore scan SARIF report
+    #   uses: github/codeql-action/upload-sarif@v2
+    #   with:
+    #     sarif_file: ${{ steps.scan.outputs.sarif }}
 
-    - uses: actions/upload-artifact@v3
-      with:
-        name: vuln-report
-        path: results.sarif
+    # - uses: actions/upload-artifact@v3
+    #   with:
+    #     name: vuln-report
+    #     path: results.sarif
 
     - uses: actions/upload-artifact@v3
       if: ${{ always() }}
