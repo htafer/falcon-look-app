@@ -17,8 +17,8 @@ jobs:
 
     - name: Docker Build and run
       run: |
-        docker build . -t scottyfullstack/falcon-look-app
-        docker run -dit -p 8000:8000 scottyfullstack/falcon-look-app
+        docker build . -t htafer/falcon-look-app
+        docker run -dit -p 8000:8000 htafer/falcon-look-app
 
     - name: Test Code
       run: coverage run -m pytest tests/
@@ -31,7 +31,7 @@ jobs:
       uses: anchore/scan-action@v3
       id: scan
       with:
-        image: "scottyfullstack/falcon-look-app"
+        image: "htafer/falcon-look-app"
 
     - name: upload Anchore scan SARIF report
       uses: github/codeql-action/upload-sarif@v2
@@ -59,11 +59,11 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: scottyfullstack/falcon-look-app:latest
+        tags: htafer/falcon-look-app:latest
 
     - name: Create issue on failure
       if: ${{ failure() }}
       run: |
         gh issue create --title "Failure on workflow: ${{ github.workflow }} - ${{ github.sha }}" --body "Failure on Job: ${{ github.job }}"
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
